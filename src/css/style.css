@@ -1,0 +1,214 @@
+@charset "UTF-8";
+html {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1440px;
+  padding: 0 50px;
+  margin: 0 auto;
+}
+
+/*HEADER*/
+.header {
+  background-color: #116ACC;
+  padding: 23px 0;
+}
+.header__container {
+  display: flex;
+  justify-content: space-between;
+}
+.header__logo {
+  font-size: 48px;
+  color: #ffffff;
+  font-family: "WorkSans", sans-serif;
+}
+.header__list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  gap: 21px;
+}
+.header__link {
+  display: inline-block;
+  padding: 14px 23px 14px 24px;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: 0.01em;
+  color: #116acc;
+  background-color: #ffffff;
+  border-radius: 7px;
+  border: 2px solid #116acc;
+  transition: background-color 0.3s;
+}
+.header__link:hover {
+  background-color: #A0C3FF;
+}
+.header__link--active {
+  background-color: #A0C3FF;
+  cursor: default;
+}
+
+/*AUTORIZATION*/
+.authorization__container {
+  position: relative;
+}
+.authorization__wrap {
+  width: 100%;
+  max-width: 500px;
+  min-height: 367px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(71%);
+  background-color: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0;
+  border-radius: 50px;
+}
+.authorization__form {
+  display: flex;
+  flex-direction: column;
+}
+.authorization__title {
+  margin: 0;
+  font-family: "WorkSans", sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  padding-left: 112px;
+  margin-bottom: 37px;
+}
+.authorization__input {
+  border: none;
+  outline: 1px solid #9ca3af;
+  border-radius: 7px;
+  padding: 12px;
+  width: 100%;
+}
+.authorization__input:focus-visible {
+  outline: 1px solid #46494e;
+}
+.authorization__input::-moz-placeholder {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  color: #6B7280;
+}
+.authorization__input::placeholder {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  color: #6B7280;
+}
+.authorization__btn {
+  align-self: start;
+}
+.authorization .label {
+  display: flex;
+  padding-right: 87px;
+  align-items: center;
+}
+.authorization .label__title {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  text-align: right;
+  color: #182233;
+  margin-right: 18px;
+}
+.authorization__label--one {
+  padding-left: 50px;
+  margin-bottom: 27px;
+}
+.authorization__label--two {
+  padding-left: 40px;
+  margin-bottom: 30px;
+}
+.authorization__label--btn {
+  margin-left: 113px;
+  max-width: 83px;
+}
+.authorization__btn {
+  background-color: #116ACC;
+  color: #ffffff;
+  cursor: pointer;
+  position: relative;
+  padding: 14px 18px 17px;
+  border: none;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  border-radius: 7px;
+  transition: background-color 0.3s;
+}
+.authorization__btn:hover {
+  background-color: #0c4179;
+}
+.authorization__btn:active {
+  border: none;
+}
+
+/*СЧЕТА*/
+.account {
+  padding: 50px 0;
+}
+.account__title {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  font-family: "WorkSans", sans-serif;
+  font-weight: 700;
+}
+.account__wrap-list {
+  display: flex;
+  gap: 37px;
+}
+.account .sort__title {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  padding: 13px 24px 11px 10px;
+  width: 300px;
+  border: 1px solid #116acc;
+  border-radius: 7px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  cursor: pointer;
+}
+.account .sort__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.account__option:hover {
+  box-shadow: 0 0 10px 100px #4ddc3b inset;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,14 @@
+@use '_variables.scss';
+
+
+@mixin btn {
+  background-color: variables.$bgBtn;
+  color: variables.$colorBtn;
+  cursor: pointer;
+  position: relative;
+  padding: 14px 18px 17px;
+  border: none;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  border-radius: 7px;
+}
