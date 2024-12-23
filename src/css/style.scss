@@ -376,3 +376,242 @@ a {
   }
 
 }
+
+/* ДЕТАЛЬНАЯ СТРАНИЦА СЧЕТА*/
+
+.score {
+  padding-top: 50px;
+
+  &__title {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 700;
+    font-family: 'WorkSans', sans-serif;
+    letter-spacing: 0.02em;
+    color: variables.$colorBlack;
+  }
+
+  &__number {
+    font-size: 34px;
+    letter-spacing: 0.02em;
+    font-family: 'WorkSans', sans-serif;
+    font-weight: 400;
+    padding-top: 30px;
+    display: inline-block;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+  }
+
+  &__btn {
+    border: none;
+    cursor: pointer;
+    background-color: variables.$bgBlue;
+    color: variables.$white;
+    background-image: url('../assests/images/arrow_left.svg');
+    background-position: left 25px center;
+    background-repeat: no-repeat;
+    padding: 16px 24px 16px 56px;
+    border-radius: 7px;
+    position: relative;
+    bottom: 7px;
+    font-size: 16px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  &__balance {
+    font-weight: 700;
+    font-family: 'WorkSans', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  &__new-wrapper {
+    display: flex;
+    gap: 0 50px;
+  }
+
+  &__wrap-right {
+    display: flex;
+    flex-direction: column;
+    gap: 28px 0;
+  }
+
+  &__wrap-balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__new-wrap {
+    width: 100%;
+    max-width: 606px;
+    padding-top: 25px;
+    padding-left: 48px;
+    padding-right: 48px;
+    padding-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px 0;
+    background-color: variables.$bgScoreDetail;
+    border-radius: 50px;
+  }
+
+  &__new-title {
+    margin: 0;
+    font-weight: 700;
+    font-family: 'WorkSans', sans-serif;
+    font-size: 20px;
+  }
+
+  &__new-auto {
+    position: relative;
+
+  }
+
+  &__new-list {
+    position: absolute;
+    top: 45px;
+    left: 1px;
+    z-index: 9;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    cursor: pointer;
+    background-color: variables.$white;
+  }
+
+  &__new-label1 {
+    display: flex;
+    gap: 0 15px;
+
+  }
+
+  label {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 125%;
+    letter-spacing: 0.01em;
+    text-align: right;
+    color: variables.$colorForm;
+    align-items: center;
+    justify-content: end;
+  }
+
+  &__new-label2 {
+    display: flex;
+    gap: 0 15px;
+  }
+
+  &__new-input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 25px 0;
+  }
+
+  &__new-auto {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &__new-input {
+    border: 1px solid #9ca3af;
+    border-radius: 7px;
+    padding: 12px 16px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &__new-input:focus-visible {
+    outline: none;
+    border: 1px solid #9ca3af;
+  }
+
+  &__new-input::placeholder {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+    color: variables.$colorPlaceholder;
+  }
+
+  &__new-label1 {
+    display: flex;
+  }
+
+  &__new-item {
+    cursor: pointer;
+    font-family: 'WorkSans', sans-serif;
+    padding: 5px;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+    color: variables.$colorPlaceholder;
+  }
+
+  &__new-btn {
+    align-self: flex-start;
+    margin-left: 208px;
+    border-radius: 7px;
+    padding: 16px 24px 16px 56px;
+    width: 164px;
+    height: 52px;
+    background-color: variables.$bgBlue;
+    border: none;
+    cursor: pointer;
+    color: variables.$white;
+    background-image: url('../assests/images/post.svg');
+    background-repeat: no-repeat;
+    background-position: left 23px center;
+  }
+
+  &__new-balance-wrap {
+    padding: 25px 50px;
+    width: 100%;
+    border-radius: 50px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+  }
+
+  &__new-balance {
+    width: 100%;
+    border: 1px solid variables.$colorBlack;
+
+  }
+
+  &__new-meanong {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-left: 25px;
+  }
+
+  &__new-max,
+  &__new-min {
+    font-family: 'WorkSans', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    color: variables.$colorBlack;
+  }
+
+  &__new-dinamic-wrap {
+    display: flex;
+  }
+
+  &__new-balance-title {
+    margin-bottom: 25px;
+    font-family: 'WorkSans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: variables.$colorBlack;
+  }
+}

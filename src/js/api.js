@@ -40,3 +40,19 @@ export async function createAccaunt(token, BACKEND) {
   });
   return await response.json();
 }
+
+export async function sendScore(token, BACKEND, scoreFrom, scoreTo, scoreAmount) {
+  const response = await fetch(`${BACKEND}transfer-funds`, {
+    method: 'POST',
+    body: JSON.stringify({
+      from: scoreFrom,
+      to: scoreTo,
+      amount: scoreAmount,
+    }),
+    headers: {
+      Authorization: `Basic ${token}`,
+      'Content-type': 'application/json',
+    },
+  });
+  return await response.json();
+}

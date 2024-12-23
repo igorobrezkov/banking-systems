@@ -1,6 +1,5 @@
-import { getList, createAccaunt, getScore } from './api';
+import { getList, createAccaunt } from './api';
 import { BACKEND, router } from './index';
-import scoreDetail, { scoreNumber } from './score';
 
 export default function accountBank() {
   const accountLk = document.createElement('section');
@@ -162,15 +161,7 @@ export default function accountBank() {
 
           btn.addEventListener('click', (e) => {
             e.preventDefault();
-
-            const id = btn.id.replace(/\/account\//, '');
-            getScore(user.token, BACKEND, id).then((data) => {
-              scoreNumber.textContent = id;
-              scoreNumber.id = id;
-            });
             router.navigate(btn.id);
-
-            // console.log(router.lastRouteResolved());
           });
         });
       });
