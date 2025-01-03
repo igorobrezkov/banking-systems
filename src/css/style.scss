@@ -1,6 +1,7 @@
 @use '_variables.scss';
 @use '_mixin.scss';
 
+
 html {
   box-sizing: border-box;
 }
@@ -432,8 +433,10 @@ a {
   }
 
   &__new-wrapper {
+    margin-bottom: 25px;
     display: flex;
     gap: 0 50px;
+    max-height: 290px;
   }
 
   &__wrap-right {
@@ -584,6 +587,10 @@ a {
     width: 100%;
     border: 1px solid variables.$colorBlack;
 
+    canvas {
+      max-height: 165px;
+      max-width: 100%;
+    }
   }
 
   &__new-meanong {
@@ -594,6 +601,7 @@ a {
   }
 
   &__new-max,
+  &__new-middle,
   &__new-min {
     font-family: 'WorkSans', sans-serif;
     font-weight: 500;
@@ -613,5 +621,185 @@ a {
     font-size: 20px;
     letter-spacing: -0.02em;
     color: variables.$colorBlack;
+  }
+}
+
+.history {
+  padding: 25px 50px;
+  min-height: 345px;
+  margin-right: 10px;
+  position: relative;
+
+  &__wrapper {
+    cursor: pointer;
+    padding: 0 55px;
+    background-color: variables.$bgHistory;
+    border-radius: 56px;
+  }
+
+  &__title {
+    margin: 0;
+    padding-top: 25px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-family: "WorkSans", sans-serif;
+    font-size: 20px;
+  }
+
+  .list-title {
+    margin: 0;
+    padding: 0;
+    padding: 20px 50px;
+    list-style: none;
+    display: flex;
+    background-color: variables.$bgListTitle;
+    border-radius: 15px;
+    gap: 0 10px;
+    cursor: pointer;
+
+    &__item {
+      font-family: "Ubuntu", sans-serif;
+      color: variables.$white;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 120%;
+      letter-spacing: -0.01em;
+      width: 100%;
+      max-width: 250px;
+    }
+
+    &__item--summ {
+      width: 100%;
+      max-width: 150px;
+    }
+
+    &__item--date {
+      width: 100%;
+      max-width: 100px;
+    }
+
+  }
+
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    cursor: pointer;
+
+    &__item {
+      padding: 25px 50px;
+      display: flex;
+      gap: 0 10px;
+      width: 100%;
+      border-bottom: 1px solid variables.$transactionLineColor;
+    }
+
+    &__span {
+      font-family: "Ubuntu", sans-serif;
+      width: 100%;
+      max-width: 250px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      letter-spacing: -0.01em;
+      color: variables.$colorTransaction;
+    }
+
+    &__span--summ {
+      width: 100%;
+      max-width: 150px;
+    }
+
+    &__span--green {
+      color: #76CA66
+    }
+
+    &__span--red {
+      color: #FD4E5D
+    }
+
+    &__span--date {
+      width: 100%;
+      max-width: 100px;
+    }
+  }
+}
+
+/* PAGINATION */
+
+.pagination {
+
+  padding: 20px 20px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+
+  &__btn {
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    height: 24px;
+    background-position: center;
+
+    cursor: pointer;
+    font-weight: 700;
+    height: 30px;
+    width: 35px;
+    margin: 0 25px;
+    border: 1px solid #9ca3af;
+  }
+
+  &__btn--prev {
+    background-image: url('../assests/images/pagination_left.svg');
+  }
+
+  &__btn--next {
+    background-image: url('../assests/images/pagination_right.svg');
+  }
+
+  &__item,
+  &__btn {
+
+    font-size: 14px;
+    font-weight: 500;
+    color: variables.$colorTransaction;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 2px;
+    user-select: none;
+
+  }
+
+  &__item {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #9ca3af;
+  }
+
+  &__item--active {
+    /*font-family: "WorkSans", sans-serif;
+    font-size: 20px;*/
+    color: variables.$white;
+    background: variables.$bgBtn;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0 20px;
+  }
+
+  &__item--no-border {
+    border: none;
+  }
+
+  &__item--no {
+    display: none;
   }
 }

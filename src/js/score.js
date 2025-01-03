@@ -1,22 +1,71 @@
-import { router } from '.';
+import { BACKEND, router, main } from '.';
+import { getScore, sendScore } from './api';
+import {
+  createChart, getBalance, createChartTransaction, chart2, chart3,
+} from './chart';
+import { getArrMonth, getArrMonthFull } from './transaction';
+import createHistory, { removeHistory, wraperHistory } from './history';
 
 export const scoreNumber = document.createElement('span');
 export const balanceNumber = document.createElement('span');
 export const numberScore = document.createElement('input');
 export const summScore = document.createElement('input');
 export const buttonScore = document.createElement('button');
-export const ctx = document.createElement('canvas');
+export const arrDop = [];
 export const minBalance = document.createElement('span');
 export const maxBalance = document.createElement('span');
+export const chart = null;
+export let chartCreate = null;
+const ctx = document.createElement('canvas');
+const ctx2 = document.createElement('canvas');
+const ctx3 = document.createElement('canvas');
 
+let user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
+let idscore = null;
+
+let cardsData = null;
 const auto = document.createElement('div');
 const ul = document.createElement('ul');
-export const arrDop = [];
+const arrBtn = [];
+let currentUrl = window.location.href;
+
+function addHundlerBtn(token, id) {
+  sendScore(token, BACKEND, id, numberScore.value, summScore.value).then((data) => {
+    if (data.payload && numberScore.value !== '' && summScore.value !== '') {
+      if (!arrDop.includes(numberScore.value)) {
+        arrDop.push(numberScore.value);
+        updateLS();
+      }
+      const key = 'autodop';
+      localStorage.setItem(
+        key,
+        JSON.stringify({
+          arrDop,
+        }),
+      );
+      numberScore.value = '';
+      summScore.value = '';
+
+      buttonScore.removeEventListener('click', addHundlerBtn);
+      main.replaceChildren();
+      startScore(id);
+      main.append(scoreDetail().score);
+      const transaction = createHistory(id);
+      main.append(transaction.history);
+    }
+  });
+}
+
+buttonScore.addEventListener('click', (e) => {
+  e.preventDefault();
+  arrBtn.length = 0;
+  arrBtn.push(e.target);
+  addHundlerBtn(user.token, arrBtn[0].id);
+});
 export function updateLS() {
   if (localStorage.getItem('autodop') != null) {
     const ls = JSON.parse(localStorage.getItem('autodop'));
     window.localStorage.removeItem('autodop');
-    // console.log(ls);
 
     if (ls != null) {
       if (ls.arrDop.length > 0) {
@@ -34,7 +83,6 @@ export function updateLS() {
         }),
       );
     }
-    //  console.log(arrDop);
   }
   function createAutoDop(arr) {
     ul.replaceChildren();
@@ -63,6 +111,7 @@ export function updateLS() {
 updateLS();
 
 export default function scoreDetail() {
+  buttonScore.addEventListener('click', addHundlerBtn);
   const score = document.createElement('section');
   score.classList.add('score');
   const container = document.createElement('div');
@@ -85,10 +134,13 @@ export default function scoreDetail() {
   button.classList.add('score__btn');
   button.textContent = 'Вернуться назад';
 
-  button.addEventListener('click', (e) => {
+  button.addEventListener('click', backHandler);
+  function backHandler(e) {
     e.preventDefault();
     router.navigate('/account');
-  });
+    numberScore.value = '';
+    summScore.value = '';
+  }
 
   const balance = document.createElement('span');
   balance.classList.add('score__balance');
@@ -143,17 +195,8 @@ export default function scoreDetail() {
   minBalance.classList.add('score__new-min');
   maxBalance.classList.add('score__new-max');
 
-  minBalance.textContent = 0;
-  maxBalance.textContent = 100;
-
   const newWrapBalance = document.createElement('div');
   newWrapBalance.classList.add('score__new-balance-wrap');
-
-  newWrapBalance.addEventListener('click', (e) => {
-    e.preventDefault();
-    // router.navigate(`/${window.location.href}/belance`);
-    console.log(`Деталка баланса:${window.location.href}`);
-  });
 
   const titleBalance = document.createElement('div');
   titleBalance.classList.add('score__new-balance-title');
@@ -185,7 +228,13 @@ export default function scoreDetail() {
   wrapInput.append(label2);
   label2.append(summScore);
   NewTransaction.append(buttonScore);
+
   wrapLeft.append(newWrapBalance);
+
+  function remnewWrapBalance() {
+    newWrapBalance.remove();
+  }
+
   newWrapBalance.append(titleBalance);
   newWrapBalance.append(wrapDinamic);
 
@@ -196,10 +245,142 @@ export default function scoreDetail() {
   balanceMeaning.append(maxBalance);
   balanceMeaning.append(minBalance);
 
+  function datailBalance(e) {
+    e.preventDefault();
+    chartCreate = true;
+
+    button.addEventListener('click', backHandlerScore);
+    function backHandlerScore(e) {
+      e.preventDefault();
+
+      if (idscore !== null) {
+        router.navigate(`/account/${idscore}`);
+
+        const listTitleitem = document.querySelectorAll('.list-title__item');
+
+        if (listTitleitem.length > 0) {
+          for (let i = 0; i < listTitleitem.length; i++) {
+            if (i > 3) {
+              listTitleitem[i].remove();
+            }
+          }
+        }
+        removeHistory();
+        chartCreate = null;
+      }
+    }
+
+    wrapLeft.replaceChildren();
+    title.textContent = 'История баланса';
+    wrapLeft.style = 'flex-direction: column; gap: 50px 0;';
+    wrapLeft.append(newWrapBalance);
+    newWrapBalance.append(titleBalance);
+    newWrapBalance.append(wrapDinamic);
+
+    wrapDinamic.append(balanceScore);
+    wrapDinamic.style = 'flex-direction: row-reverse;';
+
+    const newWrapBalance2 = document.createElement('div');
+    newWrapBalance2.classList.add('score__new-balance-wrap');
+    const titleBalance2 = document.createElement('div');
+    titleBalance2.classList.add('score__new-balance-title');
+    titleBalance2.textContent = 'Соотношение входящих исходящих транзакций';
+    const wrapDinamic2 = document.createElement('div');
+    wrapDinamic2.classList.add('score__new-dinamic-wrap');
+
+    const balanceScore2 = document.createElement('div');
+    balanceScore2.classList.add('score__new-balance');
+
+    const balanceMeaning2 = document.createElement('div');
+    balanceMeaning2.classList.add('score__new-meanong');
+
+    const minBalance2 = document.createElement('span');
+    const middleBalance = document.createElement('span');
+    const maxBalance2 = document.createElement('span');
+
+    minBalance2.classList.add('score__new-min');
+
+    middleBalance.classList.add('score__new-middle');
+    maxBalance2.classList.add('score__new-max');
+    ctx3.classList.add('score__new-canvas');
+
+    wrapLeft.append(newWrapBalance2);
+    newWrapBalance2.append(titleBalance2);
+    newWrapBalance2.append(wrapDinamic2);
+    wrapDinamic2.append(balanceMeaning2);
+    wrapDinamic2.append(balanceScore2);
+    wrapDinamic2.append(balanceMeaning2);
+
+    startScore(idscore);
+
+    if (chart2) {
+      chart2.destroy();
+    }
+    if (chart3) {
+      chart3.destroy();
+    }
+
+    balanceScore.append(ctx2);
+    const arrMonth = getArrMonth(cardsData, 12);
+
+    createChart(arrMonth, ctx2, true);
+
+    balanceScore2.append(ctx3);
+    createChartTransaction(arrMonth, ctx3);
+
+    const height = newWrapBalance.offsetHeight + 25;
+    const history = document.querySelector('.history');
+    if (history) {
+      history.style = `top:${height}px`;
+    }
+
+    const arrMonthFull = getArrMonthFull(cardsData);
+    createChartTransaction(arrMonthFull.arrMonth, ctx3, arrMonthFull.dataPlusArr, arrMonthFull.dataMinusArr);
+    minBalance2.innerHTML = '0&nbsp;₽';
+    maxBalance2.innerHTML = `${Math.round(Math.max(...getBalance(arrMonthFull.arrMonth)))}&nbsp;₽`;
+    middleBalance.innerHTML = `${Math.round(arrMonthFull.max)}&nbsp;₽`;
+    balanceMeaning2.append(maxBalance2);
+    balanceMeaning2.append(middleBalance);
+    balanceMeaning2.append(minBalance2);
+  }
+
+  newWrapBalance.addEventListener('click', datailBalance);
+  wraperHistory.addEventListener('click', datailBalance);
+
   return {
     score,
     buttonScore,
+    wrapLeft,
+    remnewWrapBalance,
   };
 }
 
 scoreDetail();
+
+export function startScore(id) {
+  idscore = id;
+  if ((localStorage.getItem('auth_token_skillbox') && localStorage.getItem('auth_token_skillbox') != null)) {
+    user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
+    getScore(user.token, BACKEND, id).then((data) => {
+      cardsData = data;
+      scoreNumber.textContent = `№ ${id}`;
+      balanceNumber.textContent = `${data.payload.balance} ₽`;
+
+      const arrMonth = getArrMonth(data, 6);
+
+      createChart(arrMonth, ctx);
+      if (chartCreate === null || currentUrl !== window.location.href) {
+        minBalance.innerHTML = '0&nbsp;₽';
+        maxBalance.innerHTML = `${Math.round(Math.max(...getBalance(arrMonth)))}&nbsp;₽`;
+      }
+
+      if (currentUrl !== window.location.href) {
+        currentUrl = window.location.href;
+      }
+    });
+
+    ctx.remove();
+
+    return id;
+  }
+}
