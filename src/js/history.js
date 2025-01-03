@@ -14,6 +14,15 @@ export const removeHistory = () => {
       }
     }
   }
+  const listTitleitem = document.querySelectorAll('.list-title__item');
+
+  if (listTitleitem.length > 0) {
+    for (let i = 0; i < listTitleitem.length; i++) {
+      if (i > 3) {
+        listTitleitem[i].remove();
+      }
+    }
+  }
   const cureetLiAll = document.querySelectorAll('.list__item');
   cureetLiAll.forEach((item) => item.remove());
 };
@@ -80,7 +89,7 @@ export default function createHistory(id) {
     const arrSort = getArrSortTransiction(data.payload.transactions).reverse();
     let pre = null;
 
-    const historyCount = 5;
+    const historyCount = 25;
     let currentPage = 1;
 
     let pagesCount = Math.ceil(arrSort.length / historyCount);
@@ -223,8 +232,8 @@ export default function createHistory(id) {
         if (value) li.textContent = value;
         paginationList.append(li);
       };
-      createPagination(totalPages, page);
-      function createPagination(totalPages, page) {
+
+      const createPagination = (totalPages, page) => {
         const liPag = document.querySelectorAll('.pagination__item');
 
         if (page > 1) {
@@ -271,25 +280,25 @@ export default function createHistory(id) {
           beforePage -= 1;
         }
 
-        if (page == 1) {
+        if (page === 1) {
           afterPage += 2;
-        } else if (page == 2) {
+        } else if (page === 2) {
           afterPage += 1;
         }
 
         for (let plength = beforePage; plength <= afterPage; plength++) {
           if (plength > totalPages) {
           }
-          if (plength == 0) {
+          if (plength === 0) {
             plength += 1;
           }
-          if (page == plength) {
+          if (page === plength) {
             active = true;
           } else {
             active = false;
           }
           const li = document.createElement('li');
-          function hundlerLi2(e) {
+          li.addEventListener('click', (e) => {
             e.preventDefault();
             createPagination(totalPages, plength);
             removeHistory();
@@ -304,8 +313,7 @@ export default function createHistory(id) {
                 }
               }
             }
-          }
-          li.addEventListener('click', hundlerLi2);
+          });
 
           createPaginationLi(li, 'pagination__item', active, plength);
         }
@@ -354,8 +362,9 @@ export default function createHistory(id) {
           }
           paginationBtn2.addEventListener('click', hanlerNext);
         }
-      }
+      };
 
+      createPagination(totalPages, page);
       wraperHistory.after(pagination);
     }
   });

@@ -256,16 +256,9 @@ export default function scoreDetail() {
       if (idscore !== null) {
         router.navigate(`/account/${idscore}`);
 
-        const listTitleitem = document.querySelectorAll('.list-title__item');
-
-        if (listTitleitem.length > 0) {
-          for (let i = 0; i < listTitleitem.length; i++) {
-            if (i > 3) {
-              listTitleitem[i].remove();
-            }
-          }
-        }
         removeHistory();
+        // paginationList.replaceChildren();
+        const prev = document.querySelectorAll('.pagination__btn');
         chartCreate = null;
       }
     }

@@ -1,5 +1,6 @@
 import { getList, createAccaunt } from './api';
 import { BACKEND, router } from './index';
+import { getArrSortBalance, getArrSortAccount, getArrSortLastTansaction } from './sort';
 
 export default function accountBank() {
   const accountLk = document.createElement('section');
@@ -99,10 +100,37 @@ export default function accountBank() {
       removeActiveLink();
       item.classList.add('sort__link--active');
       list.classList.remove('sort__list--block');
+      if ((localStorage.getItem('auth_token_skillbox') != null)) {
+        const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
+        getList(user.token, BACKEND).then((data) => {
+          switch (e.target.textContent) {
+            case ('По балансу'):
+              const arr = { payload: '' };
+              arr.payload = getArrSortBalance(data.payload);
+              cleanScores();
+              renderScores(arr);
+              break;
+            case ('По номеру'):
+              const arrA = { payload: '' };
+              arrA.payload = getArrSortAccount(data.payload);
+              cleanScores();
+              renderScores(arrA);
+              break;
+            case ('По последней транзакции'):
+              const arrD = { payload: '' };
+              arrD.payload = getArrSortLastTansaction(data.payload);
+              cleanScores();
+              renderScores(arrD);
+              break;
+            default:
+              break;
+          }
+        });
+      }
     });
   });
 
-  function renderScores() {
+  function renderScores(arr = false) {
     const scoreWrap = document.createElement('div');
     scoreWrap.classList.add('account__score-wrap', 'score-wrap');
     const listScore = document.createElement('ul');
@@ -113,7 +141,8 @@ export default function accountBank() {
     if ((localStorage.getItem('auth_token_skillbox') != null)) {
       const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
       getList(user.token, BACKEND).then((data) => {
-        data.payload.forEach((item) => {
+        const arrData = (!arr) ? data : arr;
+        arrData.payload.forEach((item) => {
           const itemScore = document.createElement('li');
           itemScore.classList.add('score-wrap__item');
           listScore.append(itemScore);
@@ -170,4 +199,11 @@ export default function accountBank() {
 
   renderScores();
   return { accountLk };
+}
+
+export function cleanScores() {
+  const scoreWrap = document.querySelector('.account__score-wrap');
+  if (scoreWrap !== null) {
+    scoreWrap.remove();
+  }
 }

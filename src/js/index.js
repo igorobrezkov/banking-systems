@@ -19,7 +19,7 @@ import scoreDetail, {
   startScore, chart, buttonScore,
 } from './score';
 
-export const router = new Navigo('/', '/account');
+export const router = new Navigo('/');
 export const BACKEND = 'http://localhost:3000/';
 
 const header = createHeader();
