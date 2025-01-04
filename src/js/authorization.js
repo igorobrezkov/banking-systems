@@ -53,27 +53,88 @@ export default function authorization() {
   labelPass.append(inputPassword);
   form.append(labelBtn);
   labelBtn.append(inputSubmit);
+  const errPass = document.createElement('span');
+  errPass.classList.add('authorization__err');
+  labelPass.after(errPass);
+  const errLogin = document.createElement('span');
+  errLogin.classList.add('authorization__err');
+  labelLogin.after(errLogin);
+  const strSearch = ' ';
 
   if ((localStorage.getItem('auth_token_skillbox') != null && window.location.pathname === '/')) {
     router.navigate('/account');
   }
 
+  inputLogin.addEventListener('input', (e) => {
+    e.preventDefault();
+    errLogin.innerHTML = '';
+  });
+
+  inputLogin.addEventListener('keypress', (e) => {
+    if (strSearch.includes(e.key)) {
+      errLogin.textContent = 'Пробелы не допустимы';
+      e.preventDefault();
+    }
+  });
+
+  inputPassword.addEventListener('input', (e) => {
+    e.preventDefault();
+    errPass.innerHTML = '';
+  });
+
+  inputPassword.addEventListener('keypress', (e) => {
+    if (strSearch.includes(e.key)) {
+      errPass.textContent = 'Пробелы не допустимы';
+      e.preventDefault();
+    }
+  });
+
   inputSubmit.addEventListener('click', (e) => {
     e.preventDefault();
 
-    getToken('developer', 'skillbox', BACKEND).then((response) => {
-      if (response.payload) {
-        const TOKEN_KEY = 'auth_token_skillbox';
-        localStorage.setItem(
-          TOKEN_KEY,
-          JSON.stringify({
-            token: response.payload.token,
-          }),
-        );
-        router.navigate('/account');
-        render();
+    if (inputLogin.value === '' || inputPassword.value === '' || inputLogin.value.length < 6 || inputPassword.value.length < 6) {
+      if (inputLogin.value === '') {
+        errLogin.textContent = 'Логин не должен быть пустым';
       }
-    });
+      if (inputLogin.value.length < 6 && inputLogin.value !== '') {
+        errLogin.textContent = 'Логин не должен быть менее 6 символов';
+      }
+      if (inputPassword.value === '') {
+        errPass.textContent = 'Пароль не должен быть пустым';
+      }
+      if (inputPassword.value.length < 6 && inputPassword.value !== '') {
+        errPass.textContent = 'Пароль не должен быть менее 6 символов';
+      }
+    } else {
+      getToken(inputLogin.value, inputPassword.value, BACKEND).then((response) => {
+        if (!response.payload) {
+          if (response.error) {
+            switch (response.error) {
+              case ('Invalid password'):
+                errPass.textContent = 'Пароль введен неверно';
+
+                break;
+              case ('No such user'):
+                errLogin.textContent = 'Логин введен неверно';
+                break;
+              default:
+                break;
+            }
+          }
+        } else if (response.payload) {
+          inputLogin.value = '';
+          const TOKEN_KEY = 'auth_token_skillbox';
+          localStorage.setItem(
+            TOKEN_KEY,
+            JSON.stringify({
+              token: response.payload.token,
+            }),
+          );
+          router.navigate('/account');
+          render();
+        }
+      });
+    }
   });
 
   return {

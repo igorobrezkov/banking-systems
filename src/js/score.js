@@ -19,6 +19,7 @@ export let chartCreate = null;
 const ctx = document.createElement('canvas');
 const ctx2 = document.createElement('canvas');
 const ctx3 = document.createElement('canvas');
+const errScore = document.createElement('span');
 
 let user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
 let idscore = null;
@@ -30,31 +31,66 @@ const arrBtn = [];
 let currentUrl = window.location.href;
 
 function addHundlerBtn(token, id) {
-  sendScore(token, BACKEND, id, numberScore.value, summScore.value).then((data) => {
-    if (data.payload && numberScore.value !== '' && summScore.value !== '') {
-      if (!arrDop.includes(numberScore.value)) {
-        arrDop.push(numberScore.value);
-        updateLS();
+  let errValue = '';
+  if (numberScore.value === '' || summScore.value === '' || summScore.value <= 0) {
+    if (numberScore.value === '' || summScore.value === '') {
+      if (numberScore.value === '') {
+        errValue += 'Номер карты не должен быть пустым ';
       }
-      const key = 'autodop';
-      localStorage.setItem(
-        key,
-        JSON.stringify({
-          arrDop,
-        }),
-      );
-      numberScore.value = '';
-      summScore.value = '';
-
-      buttonScore.removeEventListener('click', addHundlerBtn);
-      main.replaceChildren();
-      startScore(id);
-      main.append(scoreDetail().score);
-      const transaction = createHistory(id);
-      main.append(transaction.history);
+      if (summScore.value === '') {
+        errValue += 'Сумма карты не должена быть пустой ';
+      }
+    } else if (summScore.value <= 0) {
+      errValue += 'Сумма карты не должена быть меньше или равной 0 ';
     }
-  });
+    errScore.textContent = errValue;
+  } else {
+    sendScore(token, BACKEND, id, numberScore.value, summScore.value).then((data) => {
+      console.log(data);
+      if (data.payload === null) {
+        if (data.error) {
+          if (data.error === 'Invalid account to') {
+            errValue += `Номера счета: ${numberScore.value} не существует`;
+            errScore.textContent = errValue;
+          }
+        }
+      } else if (data.payload) {
+        if (!arrDop.includes(numberScore.value)) {
+          arrDop.push(numberScore.value);
+          updateLS();
+        }
+        const key = 'autodop';
+        localStorage.setItem(
+          key,
+          JSON.stringify({
+            arrDop,
+          }),
+        );
+        numberScore.value = '';
+        summScore.value = '';
+        errScore.textContent = '';
+        ul.replaceChildren();
+
+        buttonScore.removeEventListener('click', addHundlerBtn);
+        main.replaceChildren();
+        startScore(id);
+        main.append(scoreDetail().score);
+        const transaction = createHistory(id);
+        main.append(transaction.history);
+      }
+    });
+  }
 }
+
+numberScore.addEventListener('input', (e) => {
+  e.preventDefault();
+  errScore.textContent = '';
+});
+
+summScore.addEventListener('input', (e) => {
+  e.preventDefault();
+  errScore.textContent = '';
+});
 
 buttonScore.addEventListener('click', (e) => {
   e.preventDefault();
@@ -111,6 +147,8 @@ export function updateLS() {
 updateLS();
 
 export default function scoreDetail() {
+  errScore.textContent = '';
+  ul.replaceChildren();
   buttonScore.addEventListener('click', addHundlerBtn);
   const score = document.createElement('section');
   score.classList.add('score');
@@ -164,7 +202,7 @@ export default function scoreDetail() {
   label1.textContent = 'Номер счёта получателя';
 
   numberScore.classList.add('score__new-input');
-  numberScore.type = 'text';
+  numberScore.type = 'number';
   numberScore.placeholder = 'номер счета';
 
   summScore.classList.add('score__new-input');
@@ -179,6 +217,10 @@ export default function scoreDetail() {
   label2.textContent = 'Сумма перевода';
 
   auto.classList.add('score__new-auto');
+
+  errScore.classList.add('score__error');
+
+  auto.prepend(errScore);
 
   ul.classList.add('score__new-list');
 
@@ -257,8 +299,7 @@ export default function scoreDetail() {
         router.navigate(`/account/${idscore}`);
 
         removeHistory();
-        // paginationList.replaceChildren();
-        const prev = document.querySelectorAll('.pagination__btn');
+        //  const prev = document.querySelectorAll('.pagination__btn');
         chartCreate = null;
       }
     }

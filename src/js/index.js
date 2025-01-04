@@ -15,6 +15,7 @@ import createHistory from './history';
 // import { getScore, sendScore } from './api';
 import accountBank from './account';
 import atams from './atams';
+import carrencyCreate from './currency';
 import scoreDetail, {
   startScore, chart, buttonScore,
 } from './score';
@@ -82,7 +83,13 @@ export function render() {
           if (chart) {
             chart.destroy();
           }
-
+          break;
+        case 'currency':
+          main.replaceChildren();
+          main.append(carrencyCreate());
+          if (chart) {
+            chart.destroy();
+          }
           break;
         default:
           break;

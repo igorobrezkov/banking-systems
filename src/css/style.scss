@@ -105,6 +105,13 @@ a {
     border-radius: 50px;
   }
 
+  &__err {
+    color: variables.$colorErr;
+    text-align: center;
+    bottom: 15px;
+    position: relative;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
@@ -405,6 +412,11 @@ a {
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
+  }
+
+  &__error {
+    color: #FD4E5D;
+    text-align: right;
   }
 
   &__btn {
