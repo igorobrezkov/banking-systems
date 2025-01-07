@@ -307,7 +307,6 @@ export default function carrencyCreate() {
           }
 
           chanheList.prepend(li);
-          console.log(event.data);
           const liAll = document.querySelectorAll('.carrency__change-item');
           if (liAll.length > 22) {
             liAll[22].remove();

@@ -1,3 +1,4 @@
+const spinner = document.querySelector('.spinner');
 export async function getToken(log, pass, BACKEND) {
   const response = await fetch(`${BACKEND}login`, {
     method: 'POST',
@@ -9,6 +10,7 @@ export async function getToken(log, pass, BACKEND) {
       'Content-type': 'application/json',
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }
 
@@ -18,6 +20,7 @@ export async function getList(token, BACKEND) {
       Authorization: `Basic ${token}`,
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }
 
@@ -27,6 +30,7 @@ export async function getCurrencies(token, BACKEND) {
       Authorization: `Basic ${token}`,
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }
 
@@ -36,6 +40,7 @@ export async function getScore(token, BACKEND, id) {
       Authorization: `Basic ${token}`,
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }
 
@@ -47,6 +52,7 @@ export async function createAccaunt(token, BACKEND) {
       Authorization: `Basic ${token}`,
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }
 
@@ -63,6 +69,7 @@ export async function sendScore(token, BACKEND, scoreFrom, scoreTo, scoreAmount)
       'Content-type': 'application/json',
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }
 
@@ -79,6 +86,7 @@ export async function sendExchange(fr, too, am, token, BACKEND) {
       'Content-type': 'application/json',
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }
 
@@ -93,5 +101,6 @@ export async function getBank(token, BACKEND) {
       Authorization: `Basic ${token}`,
     },
   });
+  spinner.classList.add('none');
   return await response.json();
 }

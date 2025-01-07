@@ -23,7 +23,6 @@ export default function atams() {
       const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
 
       getBank(user.token, BACKEND).then((data) => {
-        console.log(data.payload.length);
         ymaps.ready(init);
         function init() {
           const myMap = new ymaps.Map('map', {
@@ -35,6 +34,7 @@ export default function atams() {
           const arrMark = [{ lat: '55.684758', lon: '37.738521' }, { lat: '55.684758', lon: '30.038521' }];
           myMap.geoObjects
             .add(myGeoObject);
+          myMap.controls.remove('searchControl');
           for (let i = 0; i < data.payload.length; i++) {
             myMap.geoObjects.add(new ymaps.Placemark([data.payload[i].lat, data.payload[i].lon], {
               balloonContent: 'Coin',

@@ -32,6 +32,13 @@ document.body.append(main);
 // localStorage.removeItem('autodop');
 // localStorage.removeItem('auth_token_skillbox');
 
+function removeSpinner() {
+  const spinner = document.querySelector('.spinner');
+  if (spinner.classList.contains('none')) {
+    spinner.classList.remove('none');
+  }
+}
+
 export function render() {
   function removeActive() {
     menu.link.forEach((item) => {
@@ -39,6 +46,17 @@ export function render() {
         item.classList.remove('header__link--active');
       }
     });
+  }
+  removeActive();
+  function addActive() {
+    const link = document.querySelectorAll('.header__link');
+    if (link.length > 0) {
+      link.forEach((item) => {
+        if (item.getAttribute('href') === window.location.pathname) {
+          item.classList.add('header__link--active');
+        }
+      });
+    }
   }
 
   if ((localStorage.getItem('auth_token_skillbox') != null)) {
@@ -49,9 +67,10 @@ export function render() {
     for (let i = 0; i < menu.link.length; i++) {
       menu.link[i].addEventListener('click', (event) => {
         event.preventDefault();
-        removeActive();
+
         router.navigate(event.target.getAttribute('href'));
         if (event.target.getAttribute('href') === window.location.pathname) {
+          removeActive();
           menu.link[i].classList.add('header__link--active');
         }
       });
@@ -65,31 +84,42 @@ export function render() {
       localStorage.removeItem('auth_token_skillbox');
       router.navigate('/');
       removeActive();
+      addActive();
       render();
     });
 
     router.on('/:id', ({ data: { id } }) => {
       switch (id) {
         case 'account':
+          removeSpinner();
           main.replaceChildren();
           main.append(accountBank().accountLk);
           if (chart) {
             chart.destroy();
           }
+          removeActive();
+          addActive();
+
           break;
         case 'atams':
+          removeSpinner();
           main.replaceChildren();
           main.append(atams());
           if (chart) {
             chart.destroy();
           }
+          removeActive();
+          addActive();
           break;
         case 'currency':
+          removeSpinner();
           main.replaceChildren();
           main.append(carrencyCreate().carrency);
           if (chart) {
             chart.destroy();
           }
+          removeActive();
+          addActive();
           break;
         default:
           break;
@@ -101,11 +131,12 @@ export function render() {
     });
 
     router.notFound(() => {
-      console.log('notFound');
+      //  console.log('notFound');
     });
 
     router.on('/account/:id', ({ data: { id } }) => {
       main.replaceChildren();
+
       if ((localStorage.getItem('auth_token_skillbox') != null)) {
         buttonScore.id = id;
         startScore(id);

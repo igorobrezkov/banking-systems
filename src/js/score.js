@@ -1,4 +1,6 @@
-import { BACKEND, router, main } from '.';
+import {
+  BACKEND, router, main,
+} from '.';
 import { getScore, sendScore } from './api';
 import {
   createChart, getBalance, createChartTransaction, chart2, chart3,
@@ -29,6 +31,17 @@ const auto = document.createElement('div');
 const ul = document.createElement('ul');
 const arrBtn = [];
 let currentUrl = window.location.href;
+
+function addActive() {
+  const link = document.querySelectorAll('.header__link');
+  if (link.length > 0) {
+    link.forEach((item) => {
+      if (item.getAttribute('href') === window.location.pathname) {
+        item.classList.add('header__link--active');
+      }
+    });
+  }
+}
 
 function addHundlerBtn(token, id) {
   let errValue = '';
@@ -174,7 +187,9 @@ export default function scoreDetail() {
   button.addEventListener('click', backHandler);
   function backHandler(e) {
     e.preventDefault();
+
     router.navigate('/account');
+    addActive();
     numberScore.value = '';
     summScore.value = '';
   }
@@ -295,10 +310,11 @@ export default function scoreDetail() {
       e.preventDefault();
 
       if (idscore !== null) {
+        addActive();
         router.navigate(`/account/${idscore}`);
 
         removeHistory();
-        //  const prev = document.querySelectorAll('.pagination__btn');
+
         chartCreate = null;
       }
     }
