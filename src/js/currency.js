@@ -185,9 +185,6 @@ export default function carrencyCreate() {
   }
   createCur();
 
-  function createChange() {
-
-  }
   fromWrapper.addEventListener('mouseover', (e) => {
     e.preventDefault();
     fromWrapper.classList.add('carrency__from-wrapper--active');
@@ -279,7 +276,6 @@ export default function carrencyCreate() {
 
   function createCurrencyFeed() {
     if ((localStorage.getItem('auth_token_skillbox') != null)) {
-      // const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
       const host = 'localhost:3000/';
       currencyFeed(host).then((socket) => {
         socket.onmessage = (event) => {
@@ -292,7 +288,6 @@ export default function carrencyCreate() {
           const summ = document.createElement('span');
           summ.classList.add('carrency__change-summ');
           const arrow = document.createElement('span');
-          // arrow.classList.add('carrency__change-arrow');
 
           li.append(name);
           li.append(dotted);

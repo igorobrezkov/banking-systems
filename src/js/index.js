@@ -12,7 +12,6 @@ import navigation from './nav';
 import authorization from './authorization';
 import createHistory from './history';
 
-// import { getScore, sendScore } from './api';
 import accountBank from './account';
 import atams from './atams';
 import carrencyCreate from './currency';

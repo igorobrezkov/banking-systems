@@ -86,3 +86,12 @@ export async function currencyFeed(host) {
   const socket = new WebSocket(`ws://${host}currency-feed`);
   return socket;
 }
+
+export async function getBank(token, BACKEND) {
+  const response = await fetch(`${BACKEND}banks`, {
+    headers: {
+      Authorization: `Basic ${token}`,
+    },
+  });
+  return await response.json();
+}
