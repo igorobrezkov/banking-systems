@@ -815,3 +815,322 @@ a {
     display: none;
   }
 }
+
+/* ВАЛЮТЫ */
+
+.carrency {
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  &__wrapper {
+    display: flex;
+    gap: 0 50px;
+    width: 100%;
+  }
+
+  &__wrap {
+    display: flex;
+    gap: 44px 0;
+    flex-direction: column;
+    width: 100%;
+    max-width: 588px;
+  }
+
+  &__your {
+    padding: 50px;
+    width: 100%;
+    border-radius: 50px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &__title {
+    margin: 0;
+    margin-bottom: 55px;
+    font-size: 34px;
+    font-weight: 700;
+    font-family: "WorkSans", sans-serif;
+    letter-spacing: 0.02em;
+    color: variables.$colorBlack;
+  }
+
+  &__your-title {
+    margin: 0;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-family: "WorkSans", sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  &__your-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 25px 0;
+  }
+
+  &__your-item {
+    display: flex;
+    align-items: baseline;
+  }
+
+  &__your-name {
+    padding-right: 10px;
+    font-family: "WorkSans", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: variables.$colorBlack;
+  }
+
+  &__your-dotted {
+    display: block;
+    width: 100%;
+    border-bottom: 1px dashed variables.$colorBlack;
+  }
+
+  &__your-summ {
+    font-family: "WorkSans", sans-serif;
+    padding-left: 10px;
+    font-weight: 400;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: variables.$colorBlack;
+  }
+
+  &__exchange {
+    padding: 50px;
+    border-radius: 50px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &__exchange-wrap {
+    display: flex;
+    gap: 0 38px;
+  }
+
+  &__exchange-title {
+    margin: 0;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-family: "WorkSans", sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  &__from {
+    font-family: "Ubuntu", sans-serif;
+    margin-right: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 125%;
+    letter-spacing: 0.01em;
+    text-align: center;
+
+  }
+
+  &__from--left {
+    padding-left: 20px;
+  }
+
+  &__from-wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  &__from-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    background-image: url('../assests/images/arrow.svg');
+    background-position: center right 23px;
+    background-repeat: no-repeat;
+  }
+
+  &__from-wrapper--active {
+    background-image: url('../assests/images/arrow_top.svg');
+  }
+
+  &__from-title {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    border: 1px solid #9ca3af;
+    border-radius: 7px;
+    padding: 8px 16px;
+    width: 134px;
+    height: 44px;
+  }
+
+  &__from-list {
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    bottom: 44px;
+    background-color: variables.$white;
+    display: none;
+    cursor: pointer;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &__from-list--active {
+    display: block;
+  }
+
+  &__from-item {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+    padding: 5px 15px;
+
+    transition: background-color .2s;
+  }
+
+  &__from-item:hover {
+    background-color: #A0C3FF;
+  }
+
+  &__exchange-left {
+    display: flex;
+    flex-direction: column;
+    gap: 25px 0;
+  }
+
+  &__exchange-input {
+    font-family: "Ubuntu", sans-serif;
+    border: 1px solid #9ca3af;
+    border-radius: 7px;
+    padding: 8px 16px;
+    width: 288px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+  }
+
+  &__exchange-input:focus-visible {
+    outline: none;
+  }
+
+  &__exchange-btn {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 125%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 16px 24px;
+    width: 104px;
+    background-color: #116ACC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__error {
+    display: block;
+    padding: 15px 0;
+    text-align: center;
+    color: #FD4E5D;
+  }
+
+  &__change {
+    padding: 50px;
+    background-color: variables.$bgChange;
+    border-radius: 50px;
+    width: 100%;
+  }
+
+  &__change-title {
+    margin: 0;
+    margin-bottom: 18px;
+    font-weight: 700;
+    font-family: "WorkSans", sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  &__change-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px 0;
+  }
+
+  &__change-item {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+  }
+
+  &__change-dotted {
+    display: block;
+    width: 100%;
+    border-bottom: 1px dashed #76ca66;
+  }
+
+  &__change-name {
+    padding-right: 10px;
+    font-family: "WorkSans", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: #000000;
+  }
+
+  &__change-summ {
+    padding-right: 10px;
+    font-family: "WorkSans", sans-serif;
+    padding-left: 10px;
+    font-weight: 400;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: #000000;
+  }
+
+  &__change-arrow {
+    width: 35px;
+    height: 25px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+  }
+
+  &__change-arrow--top {
+    background-image: url('../assests/images/arrow_up.svg');
+  }
+
+  &__change-arrow--down {
+    background-image: url('../assests/images/arrow_down.svg');
+  }
+}
+
+.atams {
+  padding: 50px;
+
+  &__title {
+    margin: 0;
+    padding: 0;
+    font-family: "WorkSans", sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+    letter-spacing: 0.02em;
+  }
+}

@@ -46,7 +46,6 @@ function addHundlerBtn(token, id) {
     errScore.textContent = errValue;
   } else {
     sendScore(token, BACKEND, id, numberScore.value, summScore.value).then((data) => {
-      console.log(data);
       if (data.payload === null) {
         if (data.error) {
           if (data.error === 'Invalid account to') {

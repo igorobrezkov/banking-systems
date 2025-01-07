@@ -31,6 +31,7 @@ const menu = navigation();
 document.body.append(main);
 
 // localStorage.removeItem('autodop');
+// localStorage.removeItem('auth_token_skillbox');
 
 export function render() {
   function removeActive() {
@@ -86,7 +87,7 @@ export function render() {
           break;
         case 'currency':
           main.replaceChildren();
-          main.append(carrencyCreate());
+          main.append(carrencyCreate().carrency);
           if (chart) {
             chart.destroy();
           }

@@ -21,6 +21,15 @@ export async function getList(token, BACKEND) {
   return await response.json();
 }
 
+export async function getCurrencies(token, BACKEND) {
+  const response = await fetch(`${BACKEND}currencies`, {
+    headers: {
+      Authorization: `Basic ${token}`,
+    },
+  });
+  return await response.json();
+}
+
 export async function getScore(token, BACKEND, id) {
   const response = await fetch(`${BACKEND}account/${id}`, {
     headers: {
@@ -55,4 +64,25 @@ export async function sendScore(token, BACKEND, scoreFrom, scoreTo, scoreAmount)
     },
   });
   return await response.json();
+}
+
+export async function sendExchange(fr, too, am, token, BACKEND) {
+  const response = await fetch(`${BACKEND}currency-buy`, {
+    method: 'POST',
+    body: JSON.stringify({
+      from: fr,
+      to: too,
+      amount: am,
+    }),
+    headers: {
+      Authorization: `Basic ${token}`,
+      'Content-type': 'application/json',
+    },
+  });
+  return await response.json();
+}
+
+export async function currencyFeed(host) {
+  const socket = new WebSocket(`ws://${host}currency-feed`);
+  return socket;
 }
