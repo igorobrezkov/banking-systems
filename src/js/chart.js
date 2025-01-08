@@ -96,38 +96,37 @@ export function createChartTransaction(arrMonth, obj, dataPlusArr, dataMinusArr)
 
         data: dataMinusArr,
         backgroundColor: ['#FD4E5D'],
-        /* tooltip: {
+        tooltip: {
           callbacks: {
-            label(context) {
-              let percentage = null;
-              for (let i = 0; i < dataMinusArr.length; i++) {
-                const percentage100 = dataMinusArr[i] + dataPlusArr[i];
-                percentage = (dataMinusArr[i] * 100) / percentage100;
-              }
-
-              return `негативные ${percentage.toFixed(2)}%`;
+            label(tooltipData) {
+              const values = tooltipData.dataset.data[tooltipData.dataIndex];
+              const result = () => {
+                const percentage100 = values + dataPlusArr[tooltipData.dataIndex];
+                const percentage = (values * 100) / percentage100;
+                return percentage;
+              };
+              return `негативные:  ${result().toFixed(2)}%`;
             },
           },
-        }, */
+        },
       },
       {
 
         data: dataPlusArr,
         backgroundColor: ['#76CA66'],
-        /* tooltip: {
+        tooltip: {
           callbacks: {
-            label(context) {
-              const { label } = context;
-              let percentage = null;
-              const percentageArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 12, 11];
-              for (let i = 0; i < dataMinusArr.length; i++) {
-                const percentage100 = dataMinusArr[i] + dataPlusArr[i];
-                percentage = (context.chart.data.datasets[i].data * 100) / percentage100;
-              }
-              return `${label}положительные ${percentage}%`;
+            label(tooltipData) {
+              const values = tooltipData.dataset.data[tooltipData.dataIndex];
+              const result = () => {
+                const percentage100 = values + dataMinusArr[tooltipData.dataIndex];
+                const percentage = (values * 100) / percentage100;
+                return percentage;
+              };
+              return `положительные:  ${result().toFixed(2)}%`;
             },
           },
-        }, */
+        },
 
       },
 

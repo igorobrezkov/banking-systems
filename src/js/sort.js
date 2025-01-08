@@ -28,7 +28,9 @@ export function getArrSortAccount(arr) {
 export function getArrSortLastTansaction(arr) {
   const arrCopy = [...arr];
   return arrCopy.sort((a, b) => {
-    if (a.transactions[0].date > b.transactions[0].date) {
+    const date1 = (a.transactions[0]) ? a.transactions[0].date : 0;
+    const date2 = (b.transactions[0]) ? b.transactions[0].date : 0;
+    if (date1 > date2) {
       return -1;
     }
   });
