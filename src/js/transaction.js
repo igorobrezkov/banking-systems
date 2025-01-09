@@ -50,8 +50,7 @@ export function getArrMonthFull(data) {
   if (arrSort[0]) {
     month = new Date(arrSort[0].date).getUTCMonth() + 1;
   }
-
-  let summ = data.payload.balance;
+  // const summ = data.payload.balance;
   let summMinus = 0;
   let summPlus = 0;
 
@@ -61,49 +60,36 @@ export function getArrMonthFull(data) {
     if (i === 0) {
       if (arrSort[0].from !== data.payload.account) {
         summPlus += arrSort[0].amount;
-        if (arrSort[1] && month !== new Date(arrSort[1].date).getUTCMonth() + 1) {
+        if (!arrSort[1]) {
           arrMonthPlus.push(summPlus);
-          summPlus = 0;
-        } else if (arrSort[0] && !arrSort[1]) {
-          arrMonthPlus.push(summPlus);
+          arrMonthMinus.push(summMinus);
         }
-      } if (arrSort[0].from === data.payload.account) {
+      } else if (arrSort[0].from === data.payload.account) {
         summMinus += arrSort[0].amount;
-        if (arrSort[1] && month !== new Date(arrSort[1].date).getUTCMonth() + 1) {
+        if (!arrSort[1]) {
           arrMonthMinus.push(summMinus);
-          summMinus = 0;
-        } else if (arrSort[0] && !arrSort[1]) {
-          arrMonthMinus.push(summMinus);
+          arrMonthPlus.push(summPlus);
         }
       }
-    } else if (i === arrSort.length - 1) {
-      if (arrSort[i].from !== data.payload.account) {
-        summPlus += arrSort[i].amount;
-      }
-      arrMonthPlus.push(summPlus);
-      if (arrSort[i].from === data.payload.account) {
-        summMinus += arrSort[i].amount;
-      }
-
-      arrMonthMinus.push(summMinus);
     }
-
     if (month !== new Date(arrSort[i].date).getUTCMonth() + 1) {
       arrMonthMinus.push(summMinus);
-      summMinus = 0;
       arrMonthPlus.push(summPlus);
+      summMinus = 0;
       summPlus = 0;
+
       month = new Date(arrSort[i].date).getUTCMonth() + 1;
     }
-
     if (arrSort[i].from !== data.payload.account && i !== 0) {
-      summ -= arrSort[i].amount;
       summPlus += arrSort[i].amount;
-    } if (arrSort[i].from === data.payload.account && i !== 0) {
-      summ += arrSort[i].amount;
+    } else if (arrSort[i].from === data.payload.account && i !== 0) {
       summMinus += arrSort[i].amount;
     }
 
+    if ((i === arrSort.length - 1) && arrSort.length > 1) {
+      arrMonthMinus.push(summMinus);
+      arrMonthPlus.push(summPlus);
+    }
     i++;
   }
 
@@ -127,10 +113,10 @@ export function getArrMonthFull(data) {
     dataPlusArr.push(arrMonthPlus[0]);
     dataMinusArr.push(0);
   }
-  const maxPlus = Math.max(...dataPlusArr);
-  const maxMinus = Math.max(...dataMinusArr);
+  const maxPlus = Math.max(...arrMonthPlus);
+  const maxMinus = Math.max(...arrMonthMinus);
   const max = (maxPlus > maxMinus) ? maxPlus : maxMinus;
-  // console.log(maxPlus);
+
   dataMinusArr.reverse();
   dataPlusArr.reverse();
   return {

@@ -412,7 +412,6 @@ export function startScore(id) {
     user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
     getScore(user.token, BACKEND, id).then((data) => {
       cardsData = data;
-      console.log(data);
 
       if (data.payload.balance === 0) {
         const newWrap = document.querySelector('.score__new-dinamic-wrap');
