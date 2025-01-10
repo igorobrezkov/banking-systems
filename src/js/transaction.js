@@ -50,7 +50,6 @@ export function getArrMonthFull(data) {
   if (arrSort[0]) {
     month = new Date(arrSort[0].date).getUTCMonth() + 1;
   }
-  // const summ = data.payload.balance;
   let summMinus = 0;
   let summPlus = 0;
 
@@ -119,6 +118,7 @@ export function getArrMonthFull(data) {
 
   dataMinusArr.reverse();
   dataPlusArr.reverse();
+
   return {
     arrMonth, dataMinusArr, dataPlusArr, max,
   };

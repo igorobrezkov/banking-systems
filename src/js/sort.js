@@ -30,7 +30,7 @@ export function getArrSortLastTansaction(arr) {
   return arrCopy.sort((a, b) => {
     const date1 = (a.transactions[0]) ? a.transactions[0].date : 0;
     const date2 = (b.transactions[0]) ? b.transactions[0].date : 0;
-    if (date1 > date2) {
+    if (date1 < date2) {
       return -1;
     }
   });
