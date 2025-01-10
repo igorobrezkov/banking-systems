@@ -135,50 +135,52 @@ export default function carrencyCreate() {
     const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
     if (user !== null) {
       getCurrencies(user.token, BACKEND).then((data) => {
-        for (const key in data.payload) {
-          if (key !== 0) {
-            const li = document.createElement('li');
-            li.classList.add('carrency__your-item');
-            const car = document.createElement('span');
-            car.classList.add('carrency__your-name');
-            car.textContent = key;
-            const dotted = document.createElement('span');
-            dotted.classList.add('carrency__your-dotted');
-            const summ = document.createElement('sum');
-            summ.classList.add('carrency__your-summ');
-            summ.textContent = data.payload[key].amount;
-            listYour.append(li);
-            li.append(car);
-            li.append(dotted);
-            li.append(summ);
-            arrCurrency.push(key);
-          }
+        if (data) {
+          for (const key in data.payload) {
+            if (key !== 0) {
+              const li = document.createElement('li');
+              li.classList.add('carrency__your-item');
+              const car = document.createElement('span');
+              car.classList.add('carrency__your-name');
+              car.textContent = key;
+              const dotted = document.createElement('span');
+              dotted.classList.add('carrency__your-dotted');
+              const summ = document.createElement('sum');
+              summ.classList.add('carrency__your-summ');
+              summ.textContent = data.payload[key].amount;
+              listYour.append(li);
+              li.append(car);
+              li.append(dotted);
+              li.append(summ);
+              arrCurrency.push(key);
+            }
 
-          function getLi() {
-            const liItem = document.createElement('li');
-            liItem.classList.add('carrency__from-item');
-            const link = document.createElement('a');
-            link.classList.add('carrency__from-link');
-            link.href = '/currency';
-            link.textContent = key;
-            liItem.append(link);
-            liItem.addEventListener('click', changeCarency);
-            return liItem;
-          }
-          function getLi2() {
-            const liItem2 = document.createElement('li');
-            liItem2.classList.add('carrency__from-item');
-            const link2 = document.createElement('a');
-            link2.classList.add('carrency__from-link');
-            link2.href = '/currency';
-            link2.textContent = key;
-            liItem2.append(link2);
-            liItem2.addEventListener('click', changeCarency2);
-            return liItem2;
-          }
+            function getLi() {
+              const liItem = document.createElement('li');
+              liItem.classList.add('carrency__from-item');
+              const link = document.createElement('a');
+              link.classList.add('carrency__from-link');
+              link.href = '/currency';
+              link.textContent = key;
+              liItem.append(link);
+              liItem.addEventListener('click', changeCarency);
+              return liItem;
+            }
+            function getLi2() {
+              const liItem2 = document.createElement('li');
+              liItem2.classList.add('carrency__from-item');
+              const link2 = document.createElement('a');
+              link2.classList.add('carrency__from-link');
+              link2.href = '/currency';
+              link2.textContent = key;
+              liItem2.append(link2);
+              liItem2.addEventListener('click', changeCarency2);
+              return liItem2;
+            }
 
-          fromList.append(getLi());
-          fromList2.append(getLi2());
+            fromList.append(getLi());
+            fromList2.append(getLi2());
+          }
         }
       });
     }

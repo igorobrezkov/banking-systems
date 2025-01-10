@@ -23,25 +23,27 @@ export default function atams() {
       const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
 
       getBank(user.token, BACKEND).then((data) => {
-        ymaps.ready(init);
-        function init() {
-          const myMap = new ymaps.Map('map', {
-            center: [55.76, 37.64],
-            zoom: 10,
+        if (data) {
+          ymaps.ready(init);
+          function init() {
+            const myMap = new ymaps.Map('map', {
+              center: [55.76, 37.64],
+              zoom: 10,
 
-          });
-          const myGeoObject = new ymaps.GeoObject({});
-          const arrMark = [{ lat: '55.684758', lon: '37.738521' }, { lat: '55.684758', lon: '30.038521' }];
-          myMap.geoObjects
-            .add(myGeoObject);
-          myMap.controls.remove('searchControl');
-          for (let i = 0; i < data.payload.length; i++) {
-            myMap.geoObjects.add(new ymaps.Placemark([data.payload[i].lat, data.payload[i].lon], {
-              balloonContent: 'Coin',
-            }, {
-              preset: 'islands#icon',
-              iconColor: '#0095b6',
-            }));
+            });
+            const myGeoObject = new ymaps.GeoObject({});
+            const arrMark = [{ lat: '55.684758', lon: '37.738521' }, { lat: '55.684758', lon: '30.038521' }];
+            myMap.geoObjects
+              .add(myGeoObject);
+            myMap.controls.remove('searchControl');
+            for (let i = 0; i < data.payload.length; i++) {
+              myMap.geoObjects.add(new ymaps.Placemark([data.payload[i].lat, data.payload[i].lon], {
+                balloonContent: 'Coin',
+              }, {
+                preset: 'islands#icon',
+                iconColor: '#0095b6',
+              }));
+            }
           }
         }
       });

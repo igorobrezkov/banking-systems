@@ -187,7 +187,6 @@ export default function scoreDetail() {
   button.addEventListener('click', backHandler);
   function backHandler(e) {
     e.preventDefault();
-
     router.navigate('/account');
     addActive();
     numberScore.value = '';

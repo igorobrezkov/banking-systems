@@ -5,6 +5,7 @@ import getArrSortTransiction from './sort';
 export const listHistory = document.createElement('ul');
 export const listHistoryTitle = document.createElement('ul');
 export const wraperHistory = document.createElement('div');
+
 export const removeHistory = () => {
   const titleAll = document.querySelectorAll('.history__title');
   if (titleAll.length > 1) {
@@ -87,9 +88,11 @@ export default function createHistory(id) {
   getScore(user.token, BACKEND, id).then((data) => {
     const { account } = data.payload;
     const arrSort = getArrSortTransiction(data.payload.transactions).reverse();
+
     let pre = null;
 
-    const historyCount = 25;
+    const historyCount = 10;
+
     let currentPage = 1;
 
     let pagesCount = Math.ceil(arrSort.length / historyCount);
@@ -97,6 +100,7 @@ export default function createHistory(id) {
     // Выводится список транзакций
     const renderHistory = (arrHistory, historyContainer, numberOfHistory, page) => {
       removeHistory();
+
       const firstHistoryIndex = numberOfHistory * page - numberOfHistory;
 
       const lastHistoryIndex = firstHistoryIndex + numberOfHistory;
@@ -287,8 +291,6 @@ export default function createHistory(id) {
         }
 
         for (let plength = beforePage; plength <= afterPage; plength++) {
-          if (plength > totalPages) {
-          }
           if (plength === 0) {
             plength += 1;
           }

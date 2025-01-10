@@ -103,27 +103,29 @@ export default function accountBank() {
       if ((localStorage.getItem('auth_token_skillbox') != null)) {
         const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
         getList(user.token, BACKEND).then((data) => {
-          switch (e.target.textContent) {
-            case ('По балансу'):
-              const arr = { payload: '' };
-              arr.payload = getArrSortBalance(data.payload);
-              cleanScores();
-              renderScores(arr);
-              break;
-            case ('По номеру'):
-              const arrA = { payload: '' };
-              arrA.payload = getArrSortAccount(data.payload);
-              cleanScores();
-              renderScores(arrA);
-              break;
-            case ('По последней транзакции'):
-              const arrD = { payload: '' };
-              arrD.payload = getArrSortLastTansaction(data.payload);
-              cleanScores();
-              renderScores(arrD);
-              break;
-            default:
-              break;
+          if (data.payload) {
+            switch (e.target.textContent) {
+              case ('По балансу'):
+                const arr = { payload: '' };
+                arr.payload = getArrSortBalance(data.payload);
+                cleanScores();
+                renderScores(arr);
+                break;
+              case ('По номеру'):
+                const arrA = { payload: '' };
+                arrA.payload = getArrSortAccount(data.payload);
+                cleanScores();
+                renderScores(arrA);
+                break;
+              case ('По последней транзакции'):
+                const arrD = { payload: '' };
+                arrD.payload = getArrSortLastTansaction(data.payload);
+                cleanScores();
+                renderScores(arrD);
+                break;
+              default:
+                break;
+            }
           }
         });
       }
@@ -142,57 +144,59 @@ export default function accountBank() {
       const user = JSON.parse(localStorage.getItem('auth_token_skillbox'));
       getList(user.token, BACKEND).then((data) => {
         const arrData = (!arr) ? data : arr;
-        arrData.payload.forEach((item) => {
-          const itemScore = document.createElement('li');
-          itemScore.classList.add('score-wrap__item');
-          listScore.append(itemScore);
+        if (arrData) {
+          arrData.payload.forEach((item) => {
+            const itemScore = document.createElement('li');
+            itemScore.classList.add('score-wrap__item');
+            listScore.append(itemScore);
 
-          const wrapScore = document.createElement('div');
-          wrapScore.classList.add('score-wrap__wrap', 'wrap');
-          itemScore.append(wrapScore);
-          const score = document.createElement('h3');
-          score.classList.add('wrap__title');
-          score.textContent = item.account;
-          wrapScore.append(score);
-          const balance = document.createElement('span');
-          balance.classList.add('wrap__balance');
-          balance.textContent = `${item.balance} ₽`;
-          wrapScore.append(balance);
+            const wrapScore = document.createElement('div');
+            wrapScore.classList.add('score-wrap__wrap', 'wrap');
+            itemScore.append(wrapScore);
+            const score = document.createElement('h3');
+            score.classList.add('wrap__title');
+            score.textContent = item.account;
+            wrapScore.append(score);
+            const balance = document.createElement('span');
+            balance.classList.add('wrap__balance');
+            balance.textContent = `${item.balance} ₽`;
+            wrapScore.append(balance);
 
-          const transactionBtn = document.createElement('div');
-          transactionBtn.classList.add('wrap__transaction-btn');
-          wrapScore.append(transactionBtn);
+            const transactionBtn = document.createElement('div');
+            transactionBtn.classList.add('wrap__transaction-btn');
+            wrapScore.append(transactionBtn);
 
-          const wrapperTransaction = document.createElement('div');
-          wrapperTransaction.classList.add('wrap__transaction', 'transaction');
-          transactionBtn.append(wrapperTransaction);
+            const wrapperTransaction = document.createElement('div');
+            wrapperTransaction.classList.add('wrap__transaction', 'transaction');
+            transactionBtn.append(wrapperTransaction);
 
-          const lastTransaction = document.createElement('h4');
-          lastTransaction.classList.add('transaction__title');
-          lastTransaction.textContent = 'Последния транзакция:';
-          wrapperTransaction.append(lastTransaction);
-          const dateTransaction = document.createElement('span');
-          dateTransaction.classList.add('transaction__date');
+            const lastTransaction = document.createElement('h4');
+            lastTransaction.classList.add('transaction__title');
+            lastTransaction.textContent = 'Последния транзакция:';
+            wrapperTransaction.append(lastTransaction);
+            const dateTransaction = document.createElement('span');
+            dateTransaction.classList.add('transaction__date');
 
-          if (item.transactions.length > 0) {
-            const date = new Date(item.transactions[0].date);
-            const arrMonth = ['январья', 'феврвлья', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-            dateTransaction.textContent = `${date.getDate()} ${arrMonth[date.getMonth()]} ${date.getFullYear()} `;
-            wrapperTransaction.append(dateTransaction);
-          }
+            if (item.transactions.length > 0) {
+              const date = new Date(item.transactions[0].date);
+              const arrMonth = ['январья', 'феврвлья', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+              dateTransaction.textContent = `${date.getDate()} ${arrMonth[date.getMonth()]} ${date.getFullYear()} `;
+              wrapperTransaction.append(dateTransaction);
+            }
 
-          const btn = document.createElement('button');
-          btn.classList.add('transaction__btn');
-          btn.id = `/account/${item.account}`;
-          btn.textContent = 'Открыть';
-          btn.setAttribute('data-navigo', '');
-          transactionBtn.append(btn);
+            const btn = document.createElement('button');
+            btn.classList.add('transaction__btn');
+            btn.id = `/account/${item.account}`;
+            btn.textContent = 'Открыть';
+            btn.setAttribute('data-navigo', '');
+            transactionBtn.append(btn);
 
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            router.navigate(btn.id);
+            btn.addEventListener('click', (e) => {
+              e.preventDefault();
+              router.navigate(btn.id);
+            });
           });
-        });
+        }
       });
     }
   }
